@@ -24,6 +24,7 @@ class PomodoroTimer:
         self._tracker = tracker
         self._timer = None
         self._time_remaining_at_last_pause = interval
+        self._updater = None
         self.resume()
 
     @property
@@ -44,19 +45,35 @@ class PomodoroTimer:
 
     def resume(self):
         assert not self._is_running, 'Cannot resume when a timer is running'
-        self._tracker.write(2, 'Resuming')
         self._started_at = time.time()
         interval = self.time_remaining
         self._timer = threading.Timer(interval, self._tracker.complete_session)
         self._timer.start()
+        self._create_updater()
 
     def pause(self):
         assert self._is_running, 'Cannot pause when no timer is running'
-        self._tracker.write(2, 'Pausing')
         self._timer.cancel()
         self._time_remaining_at_last_pause -= self._elapsed
         self._timer = None
         self._started_at = None
+
+    def _create_updater(self):
+        """Schedule a short timer to update the displays."""
+        if self._updater is None:
+            self._updater = threading.Timer(0.05, self._update)
+            self._updater.start()
+
+    def _update(self):
+        """Update displays to show how much time is left."""
+        self._updater = None
+        self._tracker.write(2, self.time_remaining)
+        if self._is_running:
+            self._create_updater()
+
+    def die(self):
+        self._updater.cancel()
+        self._timer.cancel()
 
 
 class PomodoroTracker():
@@ -66,6 +83,7 @@ class PomodoroTracker():
         self._sessions_completed = 0
         self._session_type = first_session_type
         self._paused = False
+        self._timer = None
 
     def _next_session(self):
         """Determine what kind of session should come next."""
@@ -78,10 +96,16 @@ class PomodoroTracker():
                 return SessionType.SHORT_BREAK
             else:
                 return SessionType.LONG_BREAK
+    
+    def start_timer(self, duration):
+        assert self._timer is None, 'Cannot have multiple timers running'
+        self._timer = PomodoroTimer(self, duration)
 
     def complete_session(self):
         self.write(3, 'Session is now complete.')
         self._sessions_completed += 1
+        self._timer.die()
+        self._timer = None
         sys.exit(0)
 
     def write(self, y, msg):
@@ -94,12 +118,11 @@ def main(stdscr):
     stdscr.addstr(0, 0, 'Hello, curses!')
 
     tracker = PomodoroTracker(stdscr)
-    timer = PomodoroTimer(tracker, 5)
-    threading.Timer(1, timer.pause).start()
-    threading.Timer(2, timer.resume).start()
+    tracker.start_timer(5)
+    tracker.write(4, time.time())
     while tracker._sessions_completed == 0:
-        tracker.write(1, timer.time_remaining)
-        time.sleep(0.2)
+        pass
+    tracker.write(5, time.time())
 
     stdscr.refresh()
     stdscr.getkey()
