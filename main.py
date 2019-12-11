@@ -19,6 +19,43 @@ SESSION_LENGTHS = {SessionType.WORKING_SESSION: 25*60,
         SessionType.LONG_BREAK: 15*60}
 
 
+class PomodoroTracker():
+    """Class to keep track of active and historical Pomodoro state."""
+    def __init__(self, stdscr, first_session_type=SessionType.WORKING_SESSION):
+        self._stdscr = stdscr
+        self._sessions_completed = 0
+        self._session_type = first_session_type
+        self._paused = False
+        self._timer = None
+
+    def _next_session(self):
+        """Determine what kind of session should come next."""
+        if self._session_type == SessionType.SHORT_BREAK:
+            return SessionType.WORKING_SESSION
+        elif self._session_type == SessionType.LONG_BREAK:
+            return PomdoroSessionType.WORKING_SESSION
+        elif session._session_type == SessionType.WORKING_SESSION:
+            if self._sessions_completed % 4:
+                return SessionType.SHORT_BREAK
+            else:
+                return SessionType.LONG_BREAK
+    
+    def start_timer(self, duration):
+        assert self._timer is None, 'Cannot have multiple timers running'
+        self._timer = PomodoroTimer(self, duration)
+
+    def complete_session(self):
+        self.write(3, 'Session is now complete.')
+        self._sessions_completed += 1
+        self._timer.die()
+        self._timer = None
+        sys.exit(0)
+
+    def write(self, y, msg):
+        self._stdscr.addstr(y, 0, str(msg))
+        self._stdscr.refresh()
+
+
 class PomodoroTimer:
     def __init__(self, tracker, interval):
         self._tracker = tracker
@@ -74,43 +111,6 @@ class PomodoroTimer:
     def die(self):
         self._updater.cancel()
         self._timer.cancel()
-
-
-class PomodoroTracker():
-    """Class to keep track of active and historical Pomodoro state."""
-    def __init__(self, stdscr, first_session_type=SessionType.WORKING_SESSION):
-        self._stdscr = stdscr
-        self._sessions_completed = 0
-        self._session_type = first_session_type
-        self._paused = False
-        self._timer = None
-
-    def _next_session(self):
-        """Determine what kind of session should come next."""
-        if self._session_type == SessionType.SHORT_BREAK:
-            return SessionType.WORKING_SESSION
-        elif self._session_type == SessionType.LONG_BREAK:
-            return PomdoroSessionType.WORKING_SESSION
-        elif session._session_type == SessionType.WORKING_SESSION:
-            if self._sessions_completed % 4:
-                return SessionType.SHORT_BREAK
-            else:
-                return SessionType.LONG_BREAK
-    
-    def start_timer(self, duration):
-        assert self._timer is None, 'Cannot have multiple timers running'
-        self._timer = PomodoroTimer(self, duration)
-
-    def complete_session(self):
-        self.write(3, 'Session is now complete.')
-        self._sessions_completed += 1
-        self._timer.die()
-        self._timer = None
-        sys.exit(0)
-
-    def write(self, y, msg):
-        self._stdscr.addstr(y, 0, str(msg))
-        self._stdscr.refresh()
 
 
 def main(stdscr):
