@@ -1,5 +1,3 @@
-(TCH) Sync to github
-
 (TCH) Separate main.py into class files (Tracker, Timer, Tmux)
 
 (BUG) Tmux changes wrong window title
