@@ -7,7 +7,8 @@
 
 (FTR) When each session is finished, wait for user input, then begin the next session
 
-(FTR) Listen for user input: (q) to quit
+(FTR) Listen for user input: (q) to quit, (p) to pause/resume
+- Display instructions on screen
 
 (FTR) Make the time-remaining display bigger
 
@@ -15,3 +16,5 @@
 
 (FTR) Allow the tmux option based on a command-line flag
 - Create a .preferences file which creates the flag's default
+
+(TCH) Add some simple unit tests
