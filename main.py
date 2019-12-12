@@ -163,7 +163,7 @@ def main(stdscr):
     stdscr.addstr(0, 0, 'Hello, curses!')
 
     tracker = PomodoroTracker(stdscr)
-    tracker.start_timer(5)
+    tracker.start_timer(25*60)
     while tracker._sessions_completed == 0:
         pass
 

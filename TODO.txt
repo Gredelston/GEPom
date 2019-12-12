@@ -1,4 +1,9 @@
-# Next Up
+# Bugs
+
+* Tmux: Currently, always changes the title of the active window. Should only change the title of THIS window.
+  * Implementation idea: Change the title at the beginning, then use libtmux to find which window has that title.
+
+# Features
 
 * Make it go into the main loop from the get-go
 * Allow it to run even if you don't have Tmux installed
