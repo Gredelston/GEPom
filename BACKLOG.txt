@@ -1,5 +1,3 @@
-(TCH) Separate main.py into class files (Tracker, Timer, Tmux)
-
 (BUG) Tmux changes wrong window title
 - Correct behavior: Should always change the title of the window running gepom.
 - Implementation idea: During init, change the title to the pomodoro emoji at the beginning, then use libtmux to find and memorize which window has that title.
