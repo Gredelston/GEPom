@@ -21,7 +21,7 @@ class PomodoroTracker():
     """Class to keep track of active and historical Pomodoro state."""
     def __init__(self, stdscr, first_session_type=SessionType.WORKING_SESSION):
         self._stdscr = stdscr
-        self._sessions_completed = 0
+        self._working_sessions_completed = 0
         self._session_type = first_session_type
         self._paused = False
         self._timer = None
@@ -34,7 +34,7 @@ class PomodoroTracker():
         elif self._session_type == SessionType.LONG_BREAK:
             return PomdoroSessionType.WORKING_SESSION
         elif session._session_type == SessionType.WORKING_SESSION:
-            if self._sessions_completed % 4:
+            if self._working_sessions_completed % 4:
                 return SessionType.SHORT_BREAK
             else:
                 return SessionType.LONG_BREAK
@@ -46,7 +46,8 @@ class PomodoroTracker():
     def complete_session(self):
         self.write(3, 'Session is now complete.')
         self.tmux.rename_window_with_message('DONE')
-        self._sessions_completed += 1
+        if self._session_type == SessionType.WORKING_SESSION:
+            self._working_sessions_completed += 1
         self._timer.die()
         self._timer = None
         sys.exit(0)

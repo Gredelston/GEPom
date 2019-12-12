@@ -10,7 +10,7 @@ def main(stdscr):
 
     t = tracker.PomodoroTracker(stdscr)
     t.start_timer(5)
-    while t._sessions_completed == 0:
+    while t._working_sessions_completed == 0:
         pass
 
     stdscr.refresh()
