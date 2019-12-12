@@ -9,6 +9,8 @@
 
 (FTR) Listen for user input: (q) to quit
 
+(FTR) Make the time-remaining display bigger
+
 (FTR) Check if user has tmux installed, and if not, don't run the tmux parts.
 
 (FTR) Allow the tmux option based on a command-line flag
