@@ -1,0 +1,19 @@
+(TCH) Sync to github
+
+(TCH) Separate main.py into class files (Tracker, Timer, Tmux)
+
+(BUG) Tmux changes wrong window title
+- Correct behavior: Should always change the title of the window running gepom.
+- Implementation idea: During init, change the title to the pomodoro emoji at the beginning, then use libtmux to find and memorize which window has that title.
+  - Reach goal: Do it without libtmux.
+
+(FTR) Start the first working session immediately upon init
+
+(FTR) When each session is finished, wait for user input, then begin the next session
+
+(FTR) Listen for user input: (q) to quit
+
+(FTR) Check if user has tmux installed, and if not, don't run the tmux parts.
+
+(FTR) Allow the tmux option based on a command-line flag
+- Create a .preferences file which creates the flag's default
