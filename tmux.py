@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
+import os
 import subprocess
+import sys
 
 TMUX_WINDOW_BASENAME = "🍅"
 
@@ -8,7 +10,16 @@ TMUX_WINDOW_BASENAME = "🍅"
 class TmuxHandler:
     def __init__(self):
         self._original_name = self.window_name
+        subprocess.call(['tmux', 'rename-window', TMUX_WINDOW_BASENAME])
+        print(self._find_this_pane_id())
         self.restore_basename()
+
+    def _find_this_pane_id(self):
+        """https://jacob-walker.com/blog/taming-tmux-find-one-process-among-many-windows.html"""
+        pid = os.getpid()
+        argv = ['tmux', 'run-shell',
+                'echo $(ps eww %s | sed "1d; s/^.*TMUX_PANE=//;s/ .*//")' % pid]
+        return subprocess.check_output(argv).strip()
 
     @property
     def window_name(self):
