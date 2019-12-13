@@ -38,7 +38,7 @@ class PomodoroTimer:
         assert not self._is_running, 'Cannot resume when a timer is running'
         self._started_at = time.time()
         interval = self.time_remaining
-        self._timer = threading.Timer(interval, self._tracker.complete_session)
+        self._timer = threading.Timer(interval, self._tracker._complete_session)
         self._timer.start()
         self._create_updater()
 

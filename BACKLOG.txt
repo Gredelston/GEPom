@@ -1,8 +1,4 @@
-(FTR) Start the first working session immediately upon init
-
-(FTR) When each session is finished, wait for user input, then begin the next session
-
-(FTR) Listen for user input: (q) to quit, (p) to pause/resume
+(FTR) Listen for user input: (q/x) to quit, (p) to pause/resume
 - Display instructions on screen
 
 (FTR) Display number of completed pomodoros

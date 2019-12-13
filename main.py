@@ -5,18 +5,9 @@ import tracker
 
 
 def main(stdscr):
-    stdscr.clear()
-    stdscr.addstr(0, 0, 'Hello, curses!')
-
     t = tracker.PomodoroTracker(stdscr)
-    t.start_timer(5)
-    while t._working_sessions_completed == 0:
+    while not t._QUIT:
         pass
-
-    stdscr.refresh()
-    stdscr.getkey()
-    t.close()
-
 
 if __name__ == '__main__':
     curses.wrapper(main)
