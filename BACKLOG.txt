@@ -8,6 +8,8 @@
 
 (FTR) Make the time-remaining display bigger
 
+(TCH) Add a KeyboardHandler class
+
 (FTR) Check if user has tmux installed, and if not, don't run the tmux parts.
 
 (FTR) Allow the tmux option based on a command-line flag
