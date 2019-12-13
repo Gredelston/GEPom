@@ -9,6 +9,8 @@
 
 (FTR) Make the time-remaining display bigger
 
+(TCH) Add a ScreenHandler class
+
 (TCH) Add a KeyboardHandler class
 
 (FTR) Change emoji based on session-type (working vs. break)
