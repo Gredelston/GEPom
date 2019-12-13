@@ -74,6 +74,10 @@ class PomodoroTracker():
             elif k in (curses.KEY_ENTER, 10):
                 self._begin_next_session()
                 return
+
+    @property
+    def _working_sessions_completed(self):
+        return (self._total_sessions_completed + 1) // 2
         
 
     def write(self, y, msg):

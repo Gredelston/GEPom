@@ -12,5 +12,3 @@
 
 (FTR) Allow the tmux option based on a command-line flag
 - Create a .preferences file which creates the flag's default
-
-(TCH) Add some simple unit tests
