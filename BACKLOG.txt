@@ -6,6 +6,10 @@
 
 (FTR) Display number of completed pomodoros
 
+(FTR) Play an audio ping upon session completion
+
+(FTR) Provide a system notificatioln upon session completion
+
 (FTR) Make the time-remaining display bigger
 
 (TCH) Add a KeyboardHandler class
