@@ -18,7 +18,6 @@ class TmuxHandler:
         """Find the ID of the Tmux window running this gepom process."""
         #TODO: Make this method not rely on libtmux.
         assert hasattr(self, '_pane_id'), 'Must find pane ID before window ID'
-        print('Seeking pane ID: %s' % self._pane_id)
         server = libtmux.Server()
         window_id = ''
         for session in server.list_sessions():
