@@ -64,14 +64,14 @@ class PomodoroTracker():
         self._timer = None
 
         # Offer to advance to the next session or to quit
-        self.write(4, 'Press q/x to exit, or ENTER to advance')
+        self.write(4, 'Press q/x/n to exit, or ENTER/y to advance')
         while True:
             k = self._stdscr.getch()
-            if k in (ord('q'), ord('x')):
+            if k in (ord('q'), ord('x'), ord('n')):
                 self.close()
                 self._QUIT = True
                 return
-            elif k in (curses.KEY_ENTER, 10):
+            elif k in (curses.KEY_ENTER, 10, ord('y')):
                 self._begin_next_session()
                 return
 
