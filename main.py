@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import curses
 
-import tmux
 import tracker
 
 
@@ -16,9 +15,8 @@ def main(stdscr):
 
     stdscr.refresh()
     stdscr.getkey()
-    t.tmux.restore_original_name()
+    t.close()
 
 
 if __name__ == '__main__':
-    #curses.wrapper(main)
-    _tmux = tmux.TmuxHandler()
+    curses.wrapper(main)

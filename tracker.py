@@ -50,8 +50,11 @@ class PomodoroTracker():
             self._working_sessions_completed += 1
         self._timer.die()
         self._timer = None
-        sys.exit(0)
 
     def write(self, y, msg):
         self._stdscr.addstr(y, 0, str(msg))
         self._stdscr.refresh()
+
+    def close(self):
+        """Perform shutdown processes."""
+        self.tmux.restore_original_name()
