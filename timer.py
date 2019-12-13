@@ -61,6 +61,7 @@ class PomodoroTimer:
         timestamp = self.timestamp
         if timestamp != self._last_timestamp_pushed:
             self._tracker.write(2, timestamp)
+            self._tracker.render_screen()
             self._tracker.tmux.rename_window_with_message(timestamp)
             self._last_timestamp_pushed = timestamp
         if self._is_running:

@@ -35,14 +35,15 @@ class PomodoroTracker():
 
     def _begin_next_session(self, override_duration=False):
         self._stdscr.clear()
-        self.write(0, SESSION_TITLES[self._session_type()])
-        session_type = self._session_type()
+        self.write(0, SESSION_TITLES[self._session_type])
+        session_type = self._session_type
         if override_duration:
             duration = override_duration
         else:
             duration = SESSION_LENGTHS[session_type]
         self._start_timer(duration)
 
+    @property
     def _session_type(self):
         """Determine the current session type (or upcoming, if between sessions)"""
         if self._total_sessions_completed % 2 == 0:
@@ -79,6 +80,11 @@ class PomodoroTracker():
     def _working_sessions_completed(self):
         return (self._total_sessions_completed + 1) // 2
         
+    def render_screen(self):
+        self._stdscr.clear()
+        self.write(0, SESSION_TITLES[self._session_type])
+        self.write(2, self._timer.timestamp)
+        self._stdscr.refresh()
 
     def write(self, y, msg):
         self._stdscr.addstr(y, 0, str(msg))

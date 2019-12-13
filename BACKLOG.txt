@@ -1,6 +1,3 @@
-(BUG) When number of digits decreases (10:00>9:59), curses retains last 0
-- Fix: timer._update() should call tracker.render(time_remaining), which wipes screen
-
 (FTR) Listen for user input: (q/x) to quit, (p) to pause/resume
 - Display instructions on screen
 
